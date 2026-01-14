@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERRA | Sustainable Fashion</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-forest-chrome: #0B3D2E;
+            --earthen-terracotta: #BC6C25;
+            --silk-white: #FAF9F6;
+            --parchment: #F5F0E8;
+            --warm-stone: #E8E0D5;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--parchment);
+            background-image: 
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-blend-mode: soft-light;
+            background-size: 200px 200px;
+        }
+        
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Paper Sheet Effect */
+        .paper-sheet {
+            background: linear-gradient(180deg, #FFFEF9 0%, #FAF8F3 50%, #F5F0E8 100%);
+            box-shadow: 
+                0 1px 1px rgba(0,0,0,0.02),
+                0 2px 2px rgba(0,0,0,0.02),
+                0 4px 4px rgba(0,0,0,0.02),
+                0 8px 8px rgba(0,0,0,0.03),
+                0 16px 16px rgba(0,0,0,0.03),
+                0 32px 32px rgba(0,0,0,0.02);
+        }
+        
+        /* 2026 Bio-Digital Navigation Buttons */
+        .nav-btn {
+            background: linear-gradient(135deg, var(--deep-forest-chrome) 0%, #0F4D3A 100%);
+            color: var(--silk-white);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, rgba(11,61,46,0.6), rgba(188,108,37,0.4));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            filter: blur(12px);
+            transition: opacity 0.4s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 0 20px rgba(11,61,46,0.3),
+                0 0 40px rgba(188,108,37,0.15);
+        }
+        
+        .nav-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .nav-btn:hover::after {
+            opacity: 1;
+        }
+        
+        .nav-btn.terracotta {
+            background: linear-gradient(135deg, var(--earthen-terracotta) 0%, #D4793A 100%);
+        }
+        
+        .nav-btn.terracotta:hover {
+            box-shadow: 
+                0 0 20px rgba(188,108,37,0.4),
+                0 0 40px rgba(188,108,37,0.2);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--earthen-terracotta) 0%, #D4793A 100%);
+        }
+        
+        /* Page Transitions */
+        .page {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            display: none;
+        }
+        
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+        
+        .page-enter {
+            animation: pageSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        @keyframes pageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Product Cards */
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .eco-badge {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #fdf6e3 0%, #f0ebe3 50%, #e8e0d5 100%);
+        }
+        
+        .section-divider {
+            background: linear-gradient(90deg, transparent, #d4c5b0, transparent);
+            height: 1px;
+        }
+        
+        .tab-active {
+            border-bottom: 2px solid #065f46;
+            color: #065f46;
+        }
+        
+        /* Timeline for Brand Heritage */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -29px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: var(--earthen-terracotta);
+            border-radius: 50%;
+            border: 3px solid var(--silk-white);
+            box-shadow: 0 0 0 3px var(--earthen-terracotta);
+        }
+        
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--deep-forest-chrome), var(--earthen-terracotta));
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body class="text-stone-800">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-50 border-b border-stone-200/50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
+                <svg class="w-8 h-8 text-emerald-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
+                <span class="font-serif text-2xl font-semibold text-emerald-800">TERRA</span>
+            </a>
+            
+            <!-- 2026 Bio-Digital Navigation Buttons -->
+            <div class="hidden md:flex gap-3">
+                <button onclick="navigateTo('collections-2026')" class="nav-btn px-5 py-2.5 rounded-full text-sm font-medium tracking-wide" data-page="collections-2026">
+                    Collection
+                </button>
+                <button onclick="navigateTo('brand-heritage')" class="nav-btn px-5 py-2.5 rounded-full text-sm font-medium tracking-wide" data-page="brand-heritage">
+                    Our Story
+                </button>
+                <button onclick="navigateTo('transparency-report')" class="nav-btn terracotta px-5 py-2.5 rounded-full text-sm font-medium tracking-wide" data-page="transparency-report">
+                    Sustainability
+                </button>
+                <button onclick="navigateTo('global-impact-ledger')" class="nav-btn px-5 py-2.5 rounded-full text-sm font-medium tracking-wide" data-page="global-impact-ledger">
+                    Impact
+                </button>
+            </div>
+            
+            <button class="p-2 hover:bg-stone-100 rounded-full transition relative">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+                <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">0</span>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="md:hidden px-4 pb-4 flex gap-2 overflow-x-auto">
+            <button onclick="navigateTo('collections-2026')" class="nav-btn px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap" data-page="collections-2026">
+                Collection
+            </button>
+            <button onclick="navigateTo('brand-heritage')" class="nav-btn px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap" data-page="brand-heritage">
+                Our Story
+            </button>
+            <button onclick="navigateTo('transparency-report')" class="nav-btn terracotta px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap" data-page="transparency-report">
+                Sustainability
+            </button>
+            <button onclick="navigateTo('global-impact-ledger')" class="nav-btn px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap" data-page="global-impact-ledger">
+                Impact
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="paper-sheet min-h-screen">
+        
+        <!-- HOME PAGE -->
+        <div id="page-home" class="page active">
+            <!-- Hero Section -->
+            <section class="hero-gradient pt-32 pb-20 px-6">
+                <div class="max-w-4xl mx-auto text-center">
+                    <p class="text-emerald-700 font-medium tracking-widest text-sm mb-4">CONSCIOUSLY CRAFTED • 2026 COLLECTION</p>
+                    <h1 class="font-serif text-5xl md:text-6xl font-semibold text-stone-800 leading-tight mb-6">
+                        Fashion That <span class="italic text-emerald-700">Honors</span> the Earth
+                    </h1>
+                    <p class="text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed mb-8">
+                        Every piece tells a story of sustainable innovation, ethical craftsmanship, and timeless design. Discover collections that make you look good and feel even better.
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <button onclick="navigateTo('collections-2026')" class="nav-btn px-8 py-3 rounded-full font-medium">
+                            Shop Collection
+                        </button>
+                        <button onclick="navigateTo('global-impact-ledger')" class="border-2 border-stone-300 text-stone-700 px-8 py-3 rounded-full font-medium hover:border-emerald-700 hover:text-emerald-700 transition bg-white/50">
+                            Our Impact
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Products Preview -->
+            <section class="py-16 px-6 bg-white/50">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="font-serif text-3xl md:text-4xl font-semibold mb-4">Featured Pieces</h2>
+                        <p class="text-stone-600">Curated selections from our sustainable collection</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8" id="featuredProducts"></div>
+                    <div class="text-center mt-12">
+                        <button onclick="navigateTo('collections-2026')" class="nav-btn terracotta px-8 py-3 rounded-full font-medium">
+                            View Full Collection →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Impact Stats Preview -->
+            <section class="bg-emerald-800 text-white py-20 px-6">
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="font-serif text-3xl md:text-4xl text-center mb-16">Our Collective Impact</h2>
+                    <div class="grid md:grid-cols-4 gap-8 text-center">
+                        <div>
+                            <p class="font-serif text-5xl font-semibold mb-2">2.5M</p>
+                            <p class="text-emerald-200">Liters of Water Saved</p>
+                        </div>
+                        <div>
+                            <p class="font-serif text-5xl font-semibold mb-2">89%</p>
+                            <p class="text-emerald-200">Recycled Materials</p>
+                        </div>
+                        <div>
+                            <p class="font-serif text-5xl font-semibold mb-2">12K</p>
+                            <p class="text-emerald-200">Trees Planted</p>
+                        </div>
+                        <div>
+                            <p class="font-serif text-5xl font-semibold mb-2">100%</p>
+                            <p class="text-emerald-200">Carbon Neutral</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- COLLECTIONS 2026 PAGE -->
+        <div id="page-collections-2026" class="page">
+            <section class="pt-28 pb-8 px-6 bg-gradient-to-b from-stone-100 to-transparent">
+                <div class="max-w-4xl mx-auto text-center">
+                    <p class="text-emerald-700 font-medium tracking-widest text-sm mb-4">SPRING/SUMMER 2026</p>
+                    <h1 class="font-serif text-4xl md:text-5xl font-semibold mb-4">The Collection</h1>
+                    <p class="text-stone-600 max-w-2xl mx-auto">Thoughtfully designed pieces that honor our planet. Each garment is a testament to sustainable innovation and timeless style.</p>
+                </div>
+            </section>
+
+            <!-- Category Tabs -->
+            <section class="bg-white border-b border-stone-200 sticky top-20 z-40">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="flex gap-8 overflow-x-auto py-4" id="categoryTabs">
+                        <button class="tab-active whitespace-nowrap pb-2 font-medium text-sm transition" data-category="all">All Products</button>
+                        <button class="whitespace-nowrap pb-2 font-medium text-sm text-stone-500 hover:text-emerald-700 transition" data-category="tops">Tops</button>
+                        <button class="whitespace-nowrap pb-2 font-medium text-sm text-stone-500 hover:text-emerald-700 transition" data-category="bottoms">Bottoms</button>
+                        <button class="whitespace-nowrap pb-2 font-medium text-sm text-stone-500 hover:text-emerald-700 transition" data-category="accessories">Accessories</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Grid -->
+            <section class="py-16 px-6">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="productsGrid"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- BRAND HERITAGE PAGE -->
+        <div id="page-brand-heritage" class="page">
+            <section class="pt-28 pb-16 px-6">
+                <div class="max-w-4xl mx-auto">
+                    <p class="text-emerald-700 font-medium tracking-widest text-sm mb-4 text-center">EST. 2019</p>
+                    <h1 class="font-serif text-4xl md:text-5xl font-semibold mb-8 text-center">Our Story</h1>
+                    
+                    <div class="glass-card rounded-2xl p-8 mb-12">
+                        <p class="text-lg text-stone-600 leading-relaxed mb-6">
+                            TERRA was born from a simple yet profound realization: the fashion industry didn't have to be at odds with the planet. Founded in a small studio in Portland, Oregon, we set out to prove that sustainability and style could coexist beautifully.
+                        </p>
+                        <p class="text-lg text-stone-600 leading-relaxed">
+                            Today, we work with artisan communities across four continents, pioneering new sustainable materials while honoring traditional craftsmanship. Every stitch carries our commitment to a more conscious future.
+                        </p>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="relative border-l-2 border-emerald-200 ml-6 pl-8 space-y-12">
+                        <div class="timeline-item relative">
+                            <span class="text-earthen-terracotta font-semibold text-sm" style="color: var(--earthen-terracotta)">2019</span>
+                            <h3 class="font-serif text-xl font-semibold mt-1">The Beginning</h3>
+                            <p class="text-stone-600 mt-2">Founded with a mission to create fashion that gives back to the Earth. Our first collection featured just 12 pieces, all made from organic cotton.</p>
+                        </div>
+                        <div class="timeline-item relative">
+                            <span class="text-earthen-terracotta font-semibold text-sm" style="color: var(--earthen-terracotta)">2020</span>
+                            <h3 class="font-serif text-xl font-semibold mt-1">B-Corp Certification</h3>
+                            <p class="text-stone-600 mt-2">Became a certified B Corporation, joining a global movement of companies using business as a force for good.</p>
+                        </div>
+                        <div class="timeline-item relative">
+                            <span class="text-earthen-terracotta font-semibold text-sm" style="color: var(--earthen-terracotta)">2022</span>
+                            <h3 class="font-serif text-xl font-semibold mt-1">Carbon Neutral</h3>
+                            <p class="text-stone-600 mt-2">Achieved carbon neutrality across our entire supply chain through renewable energy adoption and verified offset programs.</p>
+                        </div>
+                        <div class="timeline-item relative">
+                            <span class="text-earthen-terracotta font-semibold text-sm" style="color: var(--earthen-terracotta)">2024</span>
+                            <h3 class="font-serif text-xl font-semibold mt-1">Piñatex Pioneer</h3>
+                            <p class="text-stone-600 mt-2">Launched our first accessories line using Piñatex, a revolutionary leather alternative made from pineapple leaf fibers.</p>
+                        </div>
+                        <div class="timeline-item relative">
+                            <span class="text-earthen-terracotta font-semibold text-sm" style="color: var(--earthen-terracotta)">2026</span>
+                            <h3 class="font-serif text-xl font-semibold mt-1">The Future</h3>
+                            <p class="text-stone-600 mt-2">Introducing bio-fabricated materials and AI-optimized production to reduce waste by 95%. The revolution continues.</p>
+                        </div>
+                    </div>
+
+                    <!-- Values -->
+                    <div class="mt-20 grid md:grid-cols-3 gap-8">
+                        <div class="glass-card rounded-xl p-6 text-center">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-semibold mb-2">Compassion</h3>
+                            <p class="text-stone-600 text-sm">For people, animals, and our shared planet.</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 text-center">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-semibold mb-2">Transparency</h3>
+                            <p class="text-stone-600 text-sm">Open about our processes, pricing, and impact.</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 text-center">
+                            <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-semibold mb-2">Innovation</h3>
+                            <p class="text-stone-600 text-sm">Pushing boundaries in sustainable materials.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TRANSPARENCY REPORT PAGE -->
+        <div id="page-transparency-report" class="page">
+            <section class="pt-28 pb-16 px-6">
+                <div class="max-w-5xl mx-auto">
+                    <p class="text-emerald-700 font-medium tracking-widest text-sm mb-4 text-center">FULL DISCLOSURE</p>
+                    <h1 class="font-serif text-4xl md:text-5xl font-semibold mb-4 text-center">Transparency Report</h1>
+                    <p class="text-stone-600 text-center max-w-2xl mx-auto mb-12">We believe you have the right to know exactly how your clothes are made. Here's everything—the good and the areas we're still improving.</p>
+
+                    <!-- Materials Breakdown -->
+                    <div class="glass-card rounded-2xl p-8 mb-8">
+                        <h2 class="font-serif text-2xl font-semibold mb-6 flex items-center gap-3">
+                            <span class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center">🌱</span>
+                            Materials Breakdown
+                        </h2>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Organic Cotton</span>
+                                    <span class="text-emerald-700">34%</span>
+                                </div>
+                                <div class="h-3 bg-stone-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width: 34%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Tencel™ Lyocell</span>
+                                    <span class="text-emerald-700">28%</span>
+                                </div>
+                                <div class="h-3 bg-stone-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width: 28%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Recycled Polyester</span>
+                                    <span class="text-emerald-700">22%</span>
+                                </div>
+                                <div class="h-3 bg-stone-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width: 22%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Hemp & Linen</span>
+                                    <span class="text-emerald-700">12%</span>
+                                </div>
+                                <div class="h-3 bg-stone-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width: 12%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="font-medium">Innovative Materials (Piñatex, etc.)</span>
+                                    <span class="text-emerald-700">4%</span>
+                                </div>
+                                <div class="h-3 bg-stone-200 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width: 4%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Supply Chain -->
+                    <div class="glass-card rounded-2xl p-8 mb-8">
+                        <h2 class="font-serif text-2xl font-semibold mb-6 flex items-center gap-3">
+                            <span class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center">🏭</span>
+                            Supply Chain Partners
+                        </h2>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="border border-stone-200 rounded-xl p-5">
+                                <p class="text-xs text-emerald-700 font-medium mb-1">PORTUGAL</p>
+                                <h4 class="font-semibold mb-2">Ethical Textiles Porto</h4>
+                                <p class="text-sm text-stone-600">Our primary manufacturing partner. Fair Trade Certified, solar-powered facility, living wage guaranteed.</p>
+                            </div>
+                            <div class="border border-stone-200 rounded-xl p-5">
+                                <p class="text-xs text-emerald-700 font-medium mb-1">INDIA</p>
+                                <h4 class="font-semibold mb-2">Bangalore Organic Mills</h4>
+                                <p class="text-sm text-stone-600">GOTS-certified organic cotton processing. Women-led cooperative supporting 200+ families.</p>
+                            </div>
+                            <div class="border border-stone-200 rounded-xl p-5">
+                                <p class="text-xs text-emerald-700 font-medium mb-1">PHILIPPINES</p>
+                                <h4 class="font-semibold mb-2">Ananas Collective</h4>
+                                <p class="text-sm text-stone-600">Piñatex production from pineapple farming communities. Zero-waste processing facility.</p>
+                            </div>
+                            <div class="border border-stone-200 rounded-xl p-5">
+                                <p class="text-xs text-emerald-700 font-medium mb-1">AUSTRIA</p>
+                                <h4 class="font-semibold mb-2">Lenzing AG</h4>
+                                <p class="text-sm text-stone-600">Tencel™ fiber production with closed-loop technology. EU Ecolabel certified.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Certifications -->
+                    <div class="glass-card rounded-2xl p-8 mb-8">
+                        <h2 class="font-serif text-2xl font-semibold mb-6 flex items-center gap-3">
+                            <span class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center">✓</span>
+                            Our Certifications
+                        </h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center p-4 bg-white rounded-xl">
+                                <div class="text-3xl mb-2">🌿</div>
+                                <p class="font-medium text-sm">GOTS Certified</p>
+                            </div>
+                            <div class="text-center p-4 bg-white rounded-xl">
+                                <div class="text-3xl mb-2">🤝</div>
+                                <p class="font-medium text-sm">Fair Trade</p>
+                            </div>
+                            <div class="text-center p-4 bg-white rounded-xl">
+                                <div class="text-3xl mb-2">🅱️</div>
+                                <p class="font-medium text-sm">B-Corp</p>
+                            </div>
+                            <div class="text-center p-4 bg-white rounded-xl">
+                                <div class="text-3xl mb-2">♻️</div>
+                                <p class="font-medium text-sm">GRS Certified</p>
+                            </div>
+                            <div class="text-center p-4 bg-white rounded-xl">
+                                <div class="text-3xl mb-2">🐰</div>
+                                <p class="font-medium text-sm">PETA Approved</p>
+                            </div>
+                            <div class="text-center p-4 bg-white rounded-xl">
+                                <div class="text-3xl mb-2">🧪</div>
+                                <p class="font-medium text-sm">OEKO-TEX®</p>
+                            </div>
+                            <div class="text-center p-4 bg-white rounded-xl">
+                                <div class="text-3xl mb-2">🌍</div>
+                                <p class="font-medium text-sm">Carbon Neutral</p>
+                            </div>
+                            <div class="text-center p-4 bg-white rounded-xl">
+                                <div class="text-3xl mb-2">💧</div>
+                                <p class="font-medium text-sm">Blue Sign</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Areas for Improvement -->
+                    <div class="glass-card rounded-2xl p-8 border-l-4 border-amber-500">
+                        <h2 class="font-serif text-2xl font-semibold mb-4 flex items-center gap-3">
+                            <span class="w-10 h-10 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center">⚡</span>
+                            Areas We're Improving
+                        </h2>
+                        <ul class="space-y-3 text-stone-600">
+                            <li class="flex items-start gap-2">
+                                <span class="text-amber-500 mt-1">→</span>
+                                <span>Shipping emissions: Currently offset, working toward fossil-free logistics by 2027</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-amber-500 mt-1">→</span>
+                                <span>Microplastic shedding: Developing filtering solutions for recycled polyester garments</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-amber-500 mt-1">→</span>
+                                <span>Packaging: Transitioning from 80% to 100% plastic-free packaging by end of 2026</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- GLOBAL IMPACT LEDGER PAGE -->
+        <div id="page-global-impact-ledger" class="page">
+            <section class="pt-28 pb-16 px-6">
+                <div class="max-w-5xl mx-auto">
+                    <p class="text-emerald-700 font-medium tracking-widest text-sm mb-4 text-center">REAL-TIME DATA</p>
+                    <h1 class="font-serif text-4xl md:text-5xl font-semibold mb-4 text-center">Global Impact Ledger</h1>
+                    <p class="text-stone-600 text-center max-w-2xl mx-auto mb-12">Every purchase creates ripples of positive change. Here's the collective impact of the TERRA community.</p>
+
+                    <!-- Live Counter Stats -->
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <div class="glass-card rounded-2xl p-6 text-center">
+                            <div class="text-4xl mb-2">💧</div>
+                            <p class="font-serif text-4xl font-bold text-emerald-700 counter" data-target="2547832">0</p>
+                            <p class="text-stone-600 text-sm mt-2">Liters of Water Saved</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 text-center">
+                            <div class="text-4xl mb-2">🌳</div>
+                            <p class="font-serif text-4xl font-bold text-emerald-700 counter" data-target="12847">0</p>
+                            <p class="text-stone-600 text-sm mt-2">Trees Planted</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 text-center">
+                            <div class="text-4xl mb-2">🌊</div>
+                            <p class="font-serif text-4xl font-bold text-emerald-700 counter" data-target="89420">0</p>
+                            <p class="text-stone-600 text-sm mt-2">Plastic Bottles Diverted</p>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 text-center">
+                            <div class="text-4xl mb-2">⚡</div>
+                            <p class="font-serif text-4xl font-bold text-emerald-700 counter" data-target="156">0</p>
+                            <p class="text-stone-600 text-sm mt-2">Tons CO₂ Offset</p>
+                        </div>
+                    </div>
+
+                    <!-- Impact Map -->
+                    <div class="glass-card rounded-2xl p-8 mb-8">
+                        <h2 class="font-serif text-2xl font-semibold mb-6">Community Impact Initiatives</h2>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="border border-stone-200 rounded-xl overflow-hidden">
+                                <div class="h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-5xl">
+                                    🇵🇭
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-semibold">Philippines Farming Co-op</h4>
+                                    <p class="text-sm text-stone-600 mt-1">Supporting 150+ pineapple farming families through Piñatex production partnerships.</p>
+                                    <p class="text-emerald-700 font-semibold mt-2">$127,000 invested</p>
+                                </div>
+                            </div>
+                            <div class="border border-stone-200 rounded-xl overflow-hidden">
+                                <div class="h-32 bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-5xl">
+                                    🇮🇳
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-semibold">India Women's Collective</h4>
+                                    <p class="text-sm text-stone-600 mt-1">200+ women artisans earning living wages in our organic cotton supply chain.</p>
+                                    <p class="text-emerald-700 font-semibold mt-2">$89,000 invested</p>
+                                </div>
+                            </div>
+                            <div class="border border-stone-200 rounded-xl overflow-hidden">
+                                <div class="h-32 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-5xl">
+                                    🌊
+                                </div>
+                                <div class="p-4">
+                                    <h4 class="font-semibold">Ocean Cleanup Alliance</h4>
+                                    <p class="text-sm text-stone-600 mt-1">Partnering with coastal cleanup initiatives to rescue marine rope for upcycling.</p>
+                                    <p class="text-emerald-700 font-semibold mt-2">$45,000 invested</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Report -->
+                    <div class="glass-card rounded-2xl p-8">
+                        <h2 class="font-serif text-2xl font-semibold mb-6">2026 Quarterly Report</h2>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-stone-200">
+                                        <th class="text-left py-3 font-semibold">Metric</th>
+                                        <th class="text-right py-3 font-semibold">Q1</th>
+                                        <th class="text-right py-3 font-semibold">Q2</th>
+                                        <th class="text-right py-3 font-semibold">Target</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-stone-600">
+                                    <tr class="border-b border-stone-100">
+                                        <td class="py-3">Carbon Emissions (tons)</td>
+                                        <td class="text-right">-42</td>
+                                        <td class="text-right">-38</td>
+                                        <td class="text-right text-emerald-700">-150</td>
+                                    </tr>
+                                    <tr class="border-b border-stone-100">
+                                        <td class="py-3">Water Usage (vs. conventional)</td>
+                                        <td class="text-right">-89%</td>
+                                        <td class="text-right">-91%</td>
+                                        <td class="text-right text-emerald-700">-95%</td>
+                                    </tr>
+                                    <tr class="border-b border-stone-100">
+                                        <td class="py-3">Sustainable Materials</td>
+                                        <td class="text-right">94%</td>
+                                        <td class="text-right">96%</td>
+                                        <td class="text-right text-emerald-700">100%</td>
+                                    </tr>
+                                    <tr class="border-b border-stone-100">
+                                        <td class="py-3">Fair Wage Verified Partners</td>
+                                        <td class="text-right">100%</td>
+                                        <td class="text-right">100%</td>
+                                        <td class="text-right text-emerald-700">100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3">Plastic-Free Packaging</td>
+                                        <td class="text-right">82%</td>
+                                        <td class="text-right">87%</td>
+                                        <td class="text-right text-emerald-700">100%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto my-8">
+            <div class="sticky top-0 bg-white p-4 border-b border-stone-100 flex justify-end z-10">
+                <button id="closeModal" class="p-2 hover:bg-stone-100 rounded-full transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="modalContent" class="p-8"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-300 py-16 px-6">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <svg class="w-6 h-6 text-emerald-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    <span class="font-serif text-xl text-white">TERRA</span>
+                </div>
+                <p class="text-sm leading-relaxed">Pioneering sustainable fashion for a better tomorrow.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-medium mb-4">Shop</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" onclick="navigateTo('collections-2026')" class="hover:text-emerald-400 transition">New Arrivals</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">Bestsellers</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">Sale</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-medium mb-4">Company</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" onclick="navigateTo('brand-heritage')" class="hover:text-emerald-400 transition">Our Story</a></li>
+                    <li><a href="#" onclick="navigateTo('transparency-report')" class="hover:text-emerald-400 transition">Sustainability</a></li>
+                    <li><a href="#" class="hover:text-emerald-400 transition">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-medium mb-4">Stay Connected</h4>
+                <p class="text-sm mb-4">Subscribe for eco-conscious updates.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Your email" class="bg-stone-800 px-4 py-2 rounded-l-lg text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <button class="bg-emerald-600 px-4 py-2 rounded-r-lg hover:bg-emerald-700 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto mt-12 pt-8 border-t border-stone-800 text-center text-sm">
+            <p>&copy; 2026 TERRA Sustainable Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Product Data with Eco-Narrative structure
+        const products = [
+            {
+                id: 1,
+                name: "The Breeze Blouse",
+                price: 128,
+                category: "tops",
+                image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop",
+                material: "Tencel™ Lyocell",
+                certifications: ["GOTS Certified", "OEKO-TEX® Standard 100"],
+                hook: "Effortlessly elegant with a relaxed silhouette that moves with you. This versatile blouse transitions seamlessly from morning meetings to evening gatherings, featuring a flattering drape that complements every body type.",
+                sustainability: "**Tencel™ Lyocell** is derived from sustainably harvested eucalyptus trees using a closed-loop production process that recovers and reuses 99% of the solvent. Compared to conventional cotton, Tencel production uses **10x less water** and requires no pesticides or irrigation. The fiber is fully biodegradable and compostable, returning to nature at the end of its lifecycle.",
+                careInstructions: "Machine wash cold with like colors. Hang dry to preserve the fabric's silky texture and reduce energy consumption. Avoid tumble drying to extend the garment's lifespan by up to 50%."
+            },
+            {
+                id: 2,
+                name: "Canvas Utility Pants",
+                price: 165,
+                category: "bottoms",
+                image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&h=800&fit=crop",
+                material: "Organic Cotton Canvas",
+                certifications: ["GOTS Certified", "Fair Trade Certified™"],
+                hook: "Rugged sophistication meets everyday functionality. These utility pants feature a tailored fit with practical pockets and reinforced seams, designed for the modern urbanite who values both style and substance.",
+                sustainability: "**Organic Cotton Canvas** is grown without synthetic pesticides or fertilizers, protecting soil health and biodiversity. Our organic cotton farming practices save approximately **91% of the water** compared to conventional cotton production and reduce carbon emissions by 46%. The canvas weave creates an incredibly durable fabric that only gets better with age.",
+                careInstructions: "Wash inside out in cold water to maintain color vibrancy. Line dry when possible. The natural cotton will soften beautifully over time, creating a personalized patina unique to you."
+            },
+            {
+                id: 3,
+                name: "Meridian Crossbody",
+                price: 195,
+                category: "accessories",
+                image: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?w=600&h=800&fit=crop",
+                material: "Piñatex® (Pineapple Leaf Fiber)",
+                certifications: ["PETA-Approved Vegan"],
+                hook: "A statement piece that sparks conversation. This sculptural crossbody combines innovative design with artisanal craftsmanship, featuring clean lines and a compact silhouette perfect for hands-free living.",
+                sustainability: "**Piñatex®** is a revolutionary leather alternative made from pineapple leaf fibers, a byproduct of the pineapple harvest. This innovative material gives farming communities an additional income stream while diverting agricultural waste from landfills. The production process requires **no additional land, water, or pesticides**, making it one of the most sustainable leather alternatives available today.",
+                careInstructions: "Wipe clean with a damp cloth. Store stuffed with tissue paper to maintain shape. Avoid prolonged exposure to direct sunlight. Treat with a natural wax conditioner annually for lasting beauty."
+            },
+            {
+                id: 4,
+                name: "Horizon Midi Dress",
+                price: 218,
+                category: "tops",
+                image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=800&fit=crop",
+                material: "Recycled Polyester & Organic Linen Blend",
+                certifications: ["Global Recycled Standard (GRS)", "B-Corp Certified Supplier"],
+                hook: "Sunset-ready sophistication meets everyday wearability. This flowing midi dress features a universally flattering A-line cut with adjustable straps, perfect for everything from beach walks to rooftop dinners.",
+                sustainability: "Our **Recycled Polyester** is crafted from post-consumer plastic bottles—each dress diverts approximately **12 plastic bottles** from ocean-bound waste streams. Blended with **Organic Linen**, which requires minimal water and naturally improves soil health, this fabric offers the best of both worlds: durability and breathability with a dramatically reduced environmental footprint.",
+                careInstructions: "Hand wash or use a mesh laundry bag on gentle cycle to prevent microfiber shedding. Reshape while damp and lay flat to dry. The linen blend will become softer and more lustrous with each wash."
+            },
+            {
+                id: 5,
+                name: "Terra Wide-Leg Trousers",
+                price: 175,
+                category: "bottoms",
+                image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop",
+                material: "Hemp-Organic Cotton Blend",
+                certifications: ["GOTS Certified"],
+                hook: "Relaxed elegance reimagined. These wide-leg trousers offer a sophisticated silhouette with a high-rise waist and fluid drape, designed to elevate your everyday wardrobe with timeless appeal.",
+                sustainability: "**Hemp** is nature's most sustainable fiber—it grows rapidly without pesticides, enriches the soil it grows in, and sequesters more CO2 per hectare than most crops. Our hemp-organic cotton blend combines the natural strength and antimicrobial properties of hemp with the softness of organic cotton, creating a fabric that requires **50% less water** than conventional cotton and lasts significantly longer.",
+                careInstructions: "Machine wash cold with eco-friendly detergent. Tumble dry low or hang to dry. Iron on medium heat if needed. Hemp-cotton blends become softer with each wash while maintaining their structural integrity."
+            },
+            {
+                id: 6,
+                name: "Woven Rope Belt",
+                price: 68,
+                category: "accessories",
+                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=800&fit=crop",
+                material: "Upcycled Maritime Rope",
+                certifications: [],
+                hook: "Nautical heritage meets conscious design. This artisanally woven belt features intricate knotwork and a vintage-inspired brass buckle, adding texture and interest to any outfit.",
+                sustainability: "**Upcycled Maritime Rope** is rescued from decommissioned fishing vessels and coastal cleanup initiatives. Each belt diverts approximately **2 meters of rope** from marine ecosystems where discarded fishing gear poses a significant threat to ocean wildlife. The rope is thoroughly cleaned and hand-woven by skilled artisans, transforming ocean waste into wearable art.",
+                careInstructions: "Spot clean as needed with mild soap and water. Allow to air dry completely before storing. The rope will naturally develop character over time. Avoid prolonged exposure to moisture to preserve the brass hardware."
+            }
+        ];
+
+        // Current page state
+        let currentPage = 'home';
+
+        // Navigation function with smooth transitions
+        function navigateTo(pageId) {
+            // Update URL without reload
+            history.pushState({ page: pageId }, '', `/${pageId === 'home' ? '' : pageId}`);
+            
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active', 'page-enter');
+            });
+            
+            // Show target page with animation
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                setTimeout(() => {
+                    targetPage.classList.add('active', 'page-enter');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+            }
+            
+            // Update active nav button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.page === pageId) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            currentPage = pageId;
+            
+            // Initialize counters if on impact page
+            if (pageId === 'global-impact-ledger') {
+                setTimeout(animateCounters, 500);
+            }
+            
+            // Render products if on collections page
+            if (pageId === 'collections-2026') {
+                renderProducts();
+            }
+        }
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', (e) => {
+            const page = e.state?.page || 'home';
+            navigateTo(page);
+        });
+
+        // Render product cards
+        function renderProducts(category = 'all') {
+            const grid = document.getElementById('productsGrid');
+            if (!grid) return;
+            
+            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+            
+            grid.innerHTML = filtered.map(product => `
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer" onclick="openModal(${product.id})">
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-80 object-cover">
+                        <div class="absolute top-4 left-4 eco-badge text-white text-xs font-medium px-3 py-1 rounded-full">
+                            ${product.material.split(' ')[0]}
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-xl font-medium">${product.name}</h3>
+                            <span class="text-emerald-700 font-semibold">$${product.price}</span>
+                        </div>
+                        <p class="text-stone-500 text-sm mb-4">${product.material}</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${product.certifications.slice(0, 2).map(cert => `
+                                <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded-full">${cert}</span>
+                            `).join('')}
+                        </div>
+                        <button class="mt-4 w-full py-3 border-2 border-emerald-700 text-emerald-700 rounded-full font-medium hover:bg-emerald-700 hover:text-white transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render featured products on home page
+        function renderFeaturedProducts() {
+            const grid = document.getElementById('featuredProducts');
+            if (!grid) return;
+            
+            const featured = products.slice(0, 3);
+            grid.innerHTML = featured.map(product => `
+                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer" onclick="openModal(${product.id})">
+                    <div class="relative">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-72 object-cover">
+                        <div class="absolute top-4 left-4 eco-badge text-white text-xs font-medium px-3 py-1 rounded-full">
+                            ${product.material.split(' ')[0]}
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-serif text-lg font-medium">${product.name}</h3>
+                            <span class="text-emerald-700 font-semibold">$${product.price}</span>
+                        </div>
+                        <p class="text-stone-500 text-sm">${product.material}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Open product modal with full Eco-Narrative
+        function openModal(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-96 object-cover rounded-xl">
+                    </div>
+                    <div>
+                        <p class="text-emerald-700 text-sm font-medium tracking-wide mb-2">${product.material.toUpperCase()}</p>
+                        <h2 class="font-serif text-3xl font-semibold mb-2">${product.name}</h2>
+                        <p class="text-2xl text-emerald-700 font-semibold mb-6">$${product.price}</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            ${product.certifications.map(cert => `
+                                <span class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-medium">${cert}</span>
+                            `).join('')}
+                            ${product.certifications.length === 0 ? '<span class="text-xs text-stone-400 italic">Certifications in progress</span>' : ''}
+                        </div>
+                        
+                        <button class="w-full py-4 bg-emerald-700 text-white rounded-full font-medium hover:bg-emerald-800 transition mb-4">
+                            Add to Bag
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mt-10 space-y-8">
+                    <div>
+                        <h3 class="font-serif text-xl font-semibold text-stone-800 mb-3 flex items-center gap-2">
+                            <span class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-sm">✦</span>
+                            The Story
+                        </h3>
+                        <p class="text-stone-600 leading-relaxed pl-10">${product.hook}</p>
+                    </div>
+                    
+                    <div class="section-divider"></div>
+                    
+                    <div>
+                        <h3 class="font-serif text-xl font-semibold text-stone-800 mb-3 flex items-center gap-2">
+                            <span class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-sm">🌱</span>
+                            Sustainability Deep-Dive
+                        </h3>
+                        <div class="text-stone-600 leading-relaxed pl-10 prose prose-strong:text-emerald-700">
+                            ${product.sustainability.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+                        </div>
+                    </div>
+                    
+                    <div class="section-divider"></div>
+                    
+                    ${product.certifications.length > 0 ? `
+                    <div>
+                        <h3 class="font-serif text-xl font-semibold text-stone-800 mb-3 flex items-center gap-2">
+                            <span class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-sm">✓</span>
+                            Ethical Certifications
+                        </h3>
+                        <div class="pl-10 flex flex-wrap gap-3">
+                            ${product.certifications.map(cert => `
+                                <div class="bg-stone-100 px-4 py-3 rounded-lg">
+                                    <p class="font-medium text-stone-800">${cert}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="section-divider"></div>
+                    ` : ''}
+                    
+                    <div>
+                        <h3 class="font-serif text-xl font-semibold text-stone-800 mb-3 flex items-center gap-2">
+                            <span class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-sm">♻</span>
+                            Care for Longevity
+                        </h3>
+                        <p class="text-stone-600 leading-relaxed pl-10">${product.careInstructions}</p>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        document.getElementById('closeModal').addEventListener('click', () => {
+            const modal = document.getElementById('productModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        });
+
+        document.getElementById('productModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                document.getElementById('closeModal').click();
+            }
+        });
+
+        // Category tabs
+        document.getElementById('categoryTabs')?.addEventListener('click', (e) => {
+            if (e.target.dataset.category) {
+                document.querySelectorAll('#categoryTabs button').forEach(btn => {
+                    btn.classList.remove('tab-active', 'text-emerald-700');
+                    btn.classList.add('text-stone-500');
+                });
+                e.target.classList.add('tab-active');
+                e.target.classList.remove('text-stone-500');
+                renderProducts(e.target.dataset.category);
+            }
+        });
+
+        // Animate counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const duration = 2000;
+                const start = 0;
+                const startTime = performance.now();
+                
+                function update(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeOut = 1 - Math.pow(1 - progress, 3);
+                    const current = Math.floor(start + (target - start) * easeOut);
+                    counter.textContent = current.toLocaleString();
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(update);
+                    }
+                }
+                
+                requestAnimationFrame(update);
+            });
+        }
+
+        // Scroll progress bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = `${progress}%`;
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check URL for initial page - handle various path formats
+            let path = window.location.pathname;
+            
+            // Clean the path - remove leading/trailing slashes
+            path = path.replace(/^\/+|\/+$/g, '');
+            
+            // Map empty path to home
+            if (!path || path === 'index.html') {
+                path = 'home';
+            }
+            
+            const validPages = ['home', 'collections-2026', 'brand-heritage', 'transparency-report', 'global-impact-ledger'];
+            const initialPage = validPages.includes(path) ? path : 'home';
+            
+            console.log('Initial page detected:', initialPage); // Debug logging
+            
+            // Set initial state in history
+            history.replaceState({ page: initialPage }, '', initialPage === 'home' ? '/' : `/${initialPage}`);
+            
+            // Render home featured products first
+            renderFeaturedProducts();
+            
+            // Activate the correct page
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active', 'page-enter');
+            });
+            
+            const targetPage = document.getElementById(`page-${initialPage}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                
+                // Update nav button states
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.page === initialPage) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Initialize page-specific features
+                if (initialPage === 'global-impact-ledger') {
+                    setTimeout(animateCounters, 500);
+                }
+                if (initialPage === 'collections-2026') {
+                    renderProducts();
+                }
+            }
+            
+            currentPage = initialPage;
+        });
+    </script>
+</body>
+</html>
